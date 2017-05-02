@@ -4,15 +4,16 @@ class FruitTree {
   //height, ageStop, ageBuah, jumlahBuah, jenis buah
 
   constructor(datas) {
-    this.fruit_harvested = [];
-    this.fruit_grow = [];
+    this._fruit_grow = [];
     this._height = datas.height;
     this._fruits = datas.fruits;
+    this._totFruit = 0;
     this._age = datas.age;
     this._healthy_status = datas.healthy_status;
     this._die_age = datas.die_age;
     this._harvest_age = datas.harvest_age;
     this._jenis = datas.jenis;
+    this._tree_harvested = '';
   }
 
   get age() {
@@ -23,54 +24,40 @@ class FruitTree {
     return this._height;
   }
 
-  get fruits() {
-    let age = (this._age/this._harvest_age)+1;
-    return this._fruits.getTotalFruit(age);
-  }
-
   get healty_status() {
     return (this._healthy_status === 0 ? false : true);
   }
 
   grow() {
-    // console.log('age : '+this._age +', die : '+ this._die_age+', status '+this._healthy_status);
     this._age += 1;
+    let growth= Math.floor(Math.random()*2)+1;
     if (this._age >= this._die_age) {
       this._healthy_status = 0;
-      this._height = Math.floor(this._height * 0.85);
+    } else if(this._age >= Math.floor(this.die_age/2)) {
+    // this._height = Math.floor(this._height * 0.85);
     } else {
-      this._height = Math.floor(this._height * 1.3);
+      this._height = Math.floor(this._height * growth);
     }
 
     if (this._age >= this._harvest_age && this._age < this._die_age) this.produceFruit();
   }
 
   produceFruit() {
-    let tot = this.age >= this._harvest_age && this.age < this._die_age ? this.fruits : 0;
-    this.fruit_grow.push(tot);
+    this._totFruit += (this.age >= this._harvest_age && this.age < this._die_age ? this._fruits.getTotalFruit(this._age) : 0);
   }
 
   harvest() {
-    let flen = this.fruit_grow.length;
-    for (let i = 0; i < flen; i++) {
-      if (i !== flen-1) this.fruit_harvested.push({tot: this.fruit_grow[i], status : false});
-      else  this.fruit_harvested.push({tot: this.fruit_grow[i], status : true});
+    let bbaik = 0;
+    let bburuk = 0;
+    for (let i = 0; i < this._totFruit; i++) {
+      let qlt = Math.floor(Math.random()*2)+0;
+      if (qlt === 0) bburuk += 1;
+      else if (qlt === 1 )bbaik +=1;
     }
-    this.fruit_grow = [];
+    this._tree_harvested = ` ${this._totFruit} (${bbaik} good and ${bburuk} bad)`;
+    this._totFruit = 0;
   }
 
-  getHarvested() {
-    let len = this.fruit_harvested.length;
-    let totRusak = 0;
-    let totBagus = 0;
-    for(let i = 0; i < len; i++) {
-      if (this.fruit_harvested[i].status === false ) totRusak += this.fruit_harvested[i].tot;
-      else totBagus = this.fruit_harvested[i].tot;
-    }
-
-    this.fruit_harvested = [];
-    return 'Panen sebanyak '+(totRusak > 0 ? `${totRusak} rusak dan ` : '')+`${totBagus} buah ${this._jenis} segar`;
-  }
 
 
 
@@ -83,8 +70,8 @@ class Fruit {
     this.max = datas.max;
   }
 
-  getTotalFruit(age) {
-    return Math.ceil((Math.floor(Math.random() * this.max) + this.min) * age) ;
+  getTotalFruit(age=0) {
+    return Math.floor((Math.floor(Math.random() * this.max) + this.min) * (age/10)+1);
   }
 }
 
@@ -119,24 +106,22 @@ class Mango extends Fruit{
    driver code untuk release 0
 **/
   let mangoTree = new MangoTree();
-  mangoTree.grow(); //belum bisa panen
-  mangoTree.grow(); //panen
-  mangoTree.grow(); //panen
-  //2 kali panen buah ga diharvest
+
+  console.log('The tree is alive');
    do {
      mangoTree.grow();
      mangoTree.harvest();
-     console.log(`[Year ${mangoTree.age} Report] Height = ${mangoTree.height} | Fruits harvested = ${mangoTree.getHarvested()}`);
+     console.log(`[Year ${mangoTree.age} Report] Height = ${mangoTree.height} | Fruits harvested = ${mangoTree._tree_harvested}`);
 
    } while (mangoTree.healty_status === true)
-
+   console.log('The tree has met its end');
 
 // Release 1
 class AppleTree extends FruitTree{
   constructor(age = 0, height = Math.floor(Math.random() * 1500) + 10) {
     super({
       height : height,
-      fruits : new Mango({diameter:15,min:5,max:250}),
+      fruits : new Apple({diameter:15,min:5,max:250}),
       age : age,
       healthy_status : 1,
       die_age : 10,
@@ -153,16 +138,14 @@ class Apple extends Fruit{
 }
 
 let appleTree = new AppleTree();
-appleTree.grow(); //panen
-appleTree.grow(); //panen
-appleTree.grow(); //panen
-//3 kali panen buah ga diharvest
+console.log('\nThe tree is alive');
  do {
    appleTree.grow();
    appleTree.harvest();
-   console.log(`[Year ${appleTree.age} Report] Height = ${appleTree.height} | Fruits harvested = ${appleTree.getHarvested()}`);
-
+   console.log(`[Year ${appleTree.age} Report] Height = ${appleTree.height} | Fruits harvested = ${appleTree._tree_harvested}`);
  } while (appleTree.healty_status === true)
+
+ console.log('The tree has met its end');
 
 // Release 3
 class TreeGrove {
@@ -174,6 +157,7 @@ class TreeGrove {
     switch (jenis) {
       case 'mangga' : tree = new MangoTree(age,height);break;
       case 'apel' : tree = new AppleTree(age,height);break;
+      case 'pear' : tree = new PearTree(age,height);break;
     }
     this.trees.push(tree);
   }
@@ -198,6 +182,26 @@ class TreeGrove {
 
 }
 
+class PearTree extends FruitTree{
+  constructor(age = 0, height = Math.floor(Math.random() * 500) + 10) {
+    super({
+      height : height,
+      fruits : new Pear({diameter:15,min:5,max:250}),
+      age : age,
+      healthy_status : 1,
+      die_age : 12,
+      harvest_age: 1,
+      jenis : 'pear'
+    });
+  }
+
+}
+class Pear extends Fruit{
+  constructor(datas) {
+    super(datas);
+  }
+}
+
 let treeg = new TreeGrove();
 treeg.inputTree('mangga',15,3005); //mati
 treeg.inputTree('mangga',1); //belum buah
@@ -207,6 +211,8 @@ treeg.inputTree('apel',11); //mati
 treeg.inputTree('apel',9); //mature
 treeg.inputTree('mangga',0); //belum buah
 treeg.inputTree('apel',0); //belum buah
+treeg.inputTree('pear',0); //belum buah
+treeg.inputTree('pear',10); //belum buah
 
 console.log('semua umur');
 console.log(treeg.showAges());
