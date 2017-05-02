@@ -6,6 +6,11 @@ class MangoTree {
 
   // Initialize a new MangoTree
   constructor() {
+
+    this.age =0;
+    this.height=0;
+    this.fruits=[];
+    this.status
   }
 
   getAge() {
