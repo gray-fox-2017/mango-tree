@@ -193,7 +193,8 @@ let appleTree = new AppleTree();
 
 // Release 2
 class FruitTree {
-  constructor(maxHeight, healthStatus, pengaliBadGrade) {
+  constructor(namaPohon, maxHeight, healthStatus, pengaliBadGrade) {
+    this.jenis = namaPohon;
     this.age = 0;
     this.tinggi = 0;
     this.maxHeight = maxHeight;//ini juga beda lho
@@ -277,21 +278,107 @@ class Fruit {
 }
 
 class pearTree extends FruitTree {
-  constructor(healthStatus, maxHeight, pengaliBadGrade) {
-    super(maxHeight, healthStatus, pengaliBadGrade);
+  constructor(namaPohon, healthStatus, maxHeight, pengaliBadGrade) {
+    super(namaPohon, maxHeight, healthStatus, pengaliBadGrade);
+    this.jenis = namaPohon;
     this.maxHeight = maxHeight;//ini juga beda lho
     this.healthStatus = healthStatus; //ini juga beda lho
     this.pengaliBadGrade = pengaliBadGrade
   }
 }
 
-let pear = new pearTree(200, 10, 2);
-do {
-  pear.grow();
-  pear.produceFruit();
-  pear.harvest();
-  console.log(`[Year ${pear.age} Report] Height = ${pear.tinggi} | Fruits harvested = ${pear.harvested}\nKesehatan Pohon: ${pear.healthStatus}`)
-} while (pear.healthyStatus !== false)
+// let pear = new pearTree('Pohon Pear', 200, 10, 2);
+// do {
+//   pear.grow();
+//   pear.produceFruit();
+//   pear.harvest();
+//   console.log(`[Year ${pear.age} Report] Nama pohon = ${pear.jenis} | Height = ${pear.tinggi} | Fruits harvested = ${pear.harvested}\nKesehatan Pohon: ${pear.healthStatus}`)
+// } while (pear.healthyStatus !== false)
 
 // Release 3
-class TreeGrove {}
+class TreeGrove {
+  constructor() {
+    this.listPohon = []
+    this.listMati = []
+  }
+
+  inputTree(namaPohon, maxTinggiPohon, healthPohon, pengurangHealth) {
+    var pohonBaru = new FruitTree(namaPohon, maxTinggiPohon, healthPohon, pengurangHealth);
+    this.listPohon.push(pohonBaru);
+  }
+
+  show_ages() {
+    var umur = this.listPohon.map(x=>x.jenis + ': ' + x.age + ' tahun');
+
+    return umur.join('\n')
+  }
+
+  show_trees() {
+    var daftarPohon = this.listPohon.map(x=>x.jenis);
+    return daftarPohon.join(', ')
+  }
+
+  mature_trees() {
+    var berbuah = []
+    for (let i=0; i<this.listPohon.length;i++) {
+      if (this.listPohon[i].harvestedFruit > 0) {
+        berbuah.push(this.listPohon[i].jenis);
+        berbuah.push(this.listPohon[i].harvested)
+      }
+    }
+
+    return berbuah.join('\n')
+  }
+
+  dead_trees() {
+    if (this.listMati.length <= 0) {
+      return `Selamat saat ini belum ada pohon mu yang mati`
+    } else {
+      var mati = this.listMati.map(x=>x.jenis)
+      return 'Pohon yang sudah mati: ' + mati.join(', ')
+    }
+  }
+
+  nextYear() {
+    this.listPohon.map(x=>x.grow())
+    this.listPohon.map(x=>x.produceFruit())
+    this.listPohon.map(x=>x.harvest())
+
+    for (let i=0; i<this.listPohon.length; i++) {
+      if (this.listPohon[i].healthStatus <= 0) {
+        this.listMati.push(this.listPohon[i]);
+        this.listPohon.splice(i,1);
+      }
+    }
+  }
+}
+
+var groove = new TreeGrove();
+groove.inputTree('Pohon Mangga', 15,200,2);
+groove.inputTree('Pohon Kelapa', 35,400,1);
+groove.nextYear()
+groove.nextYear()
+groove.inputTree('Pohon Pepaya', 10,150,1);
+groove.nextYear()
+console.log(groove.show_ages());
+console.log(groove.show_trees());
+console.log(groove.mature_trees());
+console.log(groove.dead_trees());
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+groove.inputTree('Pohon Jeruk', 3,150,3);
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+groove.nextYear()
+console.log(groove.show_ages());
+console.log(groove.show_trees());
+console.log(groove.mature_trees());
+console.log(groove.dead_trees());
