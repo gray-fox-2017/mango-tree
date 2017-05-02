@@ -184,20 +184,114 @@ class Apple {
 
 let appleTree = new AppleTree();
 
-do {
-  appleTree.grow();
-  appleTree.produceApple();
-  appleTree.harvest();
-  console.log(`[Year ${appleTree.age} Report] Height = ${appleTree.tinggi} | Fruits harvested = ${appleTree.harvested}\nKesehatan Pohon: ${appleTree.healthStatus}`)
-} while (appleTree.healthyStatus !== false)
+// do {
+//   appleTree.grow();
+//   appleTree.produceApple();
+//   appleTree.harvest();
+//   console.log(`[Year ${appleTree.age} Report] Height = ${appleTree.tinggi} | Fruits harvested = ${appleTree.harvested}\nKesehatan Pohon: ${appleTree.healthStatus}`)
+// } while (appleTree.healthyStatus !== false)
 
 // Release 2
 class FruitTree {
+  constructor(maxHeight, healthStatus, pengaliBadGrade) {
+    this.age = 0;
+    this.tinggi = 0;
+    this.maxHeight = maxHeight;//ini juga beda lho
+    this.currentGoodFruit = 0;
+    this.currentBadFruit = 0;
+    this.harvestedFruit = 0;
+    this.totalHarvestedFruit = 0;
+    this.healthStatus = healthStatus; //ini juga beda lho
+    this.pengaliBadGrade = pengaliBadGrade //ini juga beda lho
+  }
+
+  get Age() {
+    return `Umur Pohon: ${this.age} Tahun`;
+  }
+  get Height() {
+    return `Tinggi Pohon: ${this.tinggi} Meter`;
+  }
+  get Fruits() {
+    return `Jumlah buah yang sudah dipetik: ${this.harvestedFruit} Buah (${this.currentGoodFruit} good, ${this.currentBadFruit} bad)`;
+  }
+  get healthyStatus() {
+    if (this.healthStatus > 0) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+  grow() {
+    this.age++;
+
+    var tambahTinggi = Math.floor((Math.random()*10)/4);
+    if ((this.tinggi + tambahTinggi) <= this.maxHeight) {
+      this.tinggi+=tambahTinggi;
+    } else {
+      this.tinggi = this.maxHeight;
+    }
+
+  }
+
+  // Produce some mangoes
+  produceFruit() {
+
+    var faktor = Math.floor((this.tinggi+this.age)*this.healthStatus/100)
+    for (let i=0; i<=faktor; i++) {
+      var fruit = new Fruit();
+      if (fruit.grade === 'good') {
+        this.currentGoodFruit++
+      } else if (fruit.grade === 'bad') {
+        this.currentBadFruit++
+      }
+    }
+    this.harvestedFruit = this.currentBadFruit + this.currentGoodFruit;
+
+    this.harvested = `${this.harvestedFruit} (${this.currentGoodFruit} Good ${this.currentBadFruit} Bad)`
+    return faktor + 'buah';
+  }
+
+  // Get some fruits
+  harvest() {
+    this.totalHarvestedFruit+=this.harvestedFruit;
+    var pengurangHealth = (1*this.currentGoodFruit)+(this.pengaliBadGrade*this.currentBadFruit);//nih beda lho
+    this.healthStatus -= pengurangHealth;
+    this.currentBadFruit = 0;
+    this.currentGoodFruit = 0;
+
+  }
 
 }
+
 class Fruit {
+  constructor() {
+    var faktor = Math.floor(Math.random()*10);
 
+    if (faktor % 2 === 0) {
+      this.grade = 'good';
+    } else {
+      this.grade = 'bad';
+    }
+  }
 }
+
+class pearTree extends FruitTree {
+  constructor(healthStatus, maxHeight, pengaliBadGrade) {
+    super(maxHeight, healthStatus, pengaliBadGrade);
+    this.maxHeight = maxHeight;//ini juga beda lho
+    this.healthStatus = healthStatus; //ini juga beda lho
+    this.pengaliBadGrade = pengaliBadGrade
+  }
+}
+
+let pear = new pearTree(200, 10, 2);
+do {
+  pear.grow();
+  pear.produceFruit();
+  pear.harvest();
+  console.log(`[Year ${pear.age} Report] Height = ${pear.tinggi} | Fruits harvested = ${pear.harvested}\nKesehatan Pohon: ${pear.healthStatus}`)
+} while (pear.healthyStatus !== false)
 
 // Release 3
 class TreeGrove {}
