@@ -87,9 +87,6 @@ class FruitTree {
   }
 
   produceFruitsArgs(totalBuah) {
-    //let buah = random() + 30;
-  //  let totalBuah = (buah > this._maxFruits) ? this._maxFruits : buah;
-
     for (let i = 0; i < totalBuah; i++) {
       let fruit = new Fruit();
 
