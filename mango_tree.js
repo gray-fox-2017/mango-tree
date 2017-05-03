@@ -20,9 +20,9 @@ class FruitTree {
 
     this._harvested = 0;
 
-    this._health = true;
-    if(param.hasOwnProperty("health")) {
-      this._health = param["health"];
+    this._healthy = true;
+    if(param.hasOwnProperty("healthy")) {
+      this._healthy = param["healthy"];
     }
 
     this._maxAge = 20;
@@ -84,10 +84,11 @@ class FruitTree {
 
       this._fruits.push(fruit);
     }
+  }
 
-  produceFruitsArgs() {
-    let buah = random() + 30;
-    let totalBuah = (buah > this._maxFruits) ? this._maxFruits : buah;
+  produceFruitsArgs(totalBuah) {
+    //let buah = random() + 30;
+  //  let totalBuah = (buah > this._maxFruits) ? this._maxFruits : buah;
 
     for (let i = 0; i < totalBuah; i++) {
       let fruit = new Fruit();
@@ -204,57 +205,64 @@ class TreeGrove {
     this.trees = [];
   }
 
-  inputTree(fruitName, age, height, fruits, healthy){
+  inputTree(fruitName, age, height, fruits, healthy) {
     if (fruitName == "MangoTree"){
-      let mangoTree = new MangoTree({fruitName: "Mango", age: "age", height: "height", fruits: "fruits", health: healthy});
-      this.trees.push(mangoTree)
+      let mangoTree = new MangoTree({fruitName: fruitName, age: age, height: height, fruits: fruits, healthy: healthy});
+      this.trees.push(mangoTree);
     }
     if (fruitName == "AppleTree"){
-      var appleTree = new AppleTree(fruitName, age, height, fruits, healthy)
-      this.trees.push(appleTree)
+      let appleTree = new AppleTree({fruitName: fruitName, age: age, height: height, fruits: fruits, healthy: healthy});
+      this.trees.push(appleTree);
     }
     if (fruitName == "PearTree"){
-      var pearTree = new PearTree(fruitName, age, height, fruits, healthy)
-      this.trees.push(pearTree)
+      let pearTree = new PearTree({fruitName: fruitName, age: age, height: height, fruits: fruits, healthy: healthy});
+      this.trees.push(pearTree);
     }
   }
-  showAges(){
-    for (let i=0; i<this.trees.length; i++){
+  showAges() {
+    for (let i = 0; i < this.trees.length; i++) {
       console.log(`${this.trees[i]._fruitName}, age: ${this.trees[i]._age} years old`)
     }
   }
-  showTrees(){
-    for (let i=0; i<this.trees.length; i++){
-      console.log(this.trees[i]._kind)
+  showTrees() {
+    console.log("\nTree Kind:");
+    for (let i = 0; i < this.trees.length; i++) {
+      console.log(this.trees[i]._fruitName);
     }
   }
-  matureTrees(){
-    for (let i=0; i<this.trees.length; i++){
-      if (this.trees[i]._fruitlength > 0){
-        console.log(`${this.trees[i].fruitName}, fruits: ${this.trees[i]._fruits.length}, height: ${this.trees[i]._height} m`)
+  matureTrees() {
+    console.log("\nGrowing Tree:");
+    for (let i = 0; i < this.trees.length; i++) {
+      if (this.trees[i]._fruits.length > 0) {
+        console.log(`${this.trees[i]._fruitName}, fruits: ${this.trees[i]._fruits.length}, height: ${this.trees[i]._height} m`);
       }
     }
   }
-  deadTrees(){
-    for (let i=0; i<this.trees.length; i++){
-      if (this.trees[i]._healthy === false){
-        console.log(this.trees[i]._kind)
+  deadTrees() {
+    console.log("\nDead Tree:");
+    for (let i = 0; i < this.trees.length; i++){
+      if (this.trees[i]._healthy == false) {
+        console.log(`{this.trees[i]._fruitName}`);
+      } else {
+        return console.log("No dead tree found!");
       }
     }
   }
-  nextYear(){
-    for (let i=0; i<this.trees.length; i++){
+  nextYear() {
+    for (let i = 0; i < this.trees.length; i++){
       this.trees[i].grow();
     }
+    console.log("Next year:");
   }
 }
-var grove = new TreeGrove()
-grove.inputTree("MangoTree", 3, 1.8, 7, true)
-grove.inputTree("MangoTree", 5, 2.4, 12, true)
-grove.inputTree("AppleTree", 4, 1.2, 5, true)
-grove.inputTree("PearTree", 7, 2, 15, true)
-grove.nextYear()
-grove.showAges()
-grove.showTrees()
-grove.matureTrees()
-grove.deadTrees()
+
+let grove = new TreeGrove()
+grove.inputTree("MangoTree", 3, 1.8, 7, true);
+grove.inputTree("MangoTree", 5, 2.4, 12, true);
+grove.inputTree("AppleTree", 4, 1.2, 5, true);
+grove.inputTree("PearTree", 7, 2, 15, true);
+grove.nextYear();
+grove.showAges();
+grove.showTrees();
+grove.matureTrees();
+grove.deadTrees();
