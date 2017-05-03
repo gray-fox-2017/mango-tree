@@ -12,49 +12,23 @@ class FruitTree {
 
   grow(){
     let randomHeight= Math.floor((Math.random()*2));
-    if(this.name==="MangoTree"){
-
-      let maxHeight=3
-      this.age+=1;
-
-      if(maxHeight!==this.height)
-      this.height+=randomHeight;
-      else this.height=this.height;
-
-      if(this.age===10){
-        this.healthyStatus=false;
-      }
-
-
-
-    }else if(this.name==="AppleTree"){
-
-      let maxHeight=5
-      this.age+=1;
-
-      if(maxHeight!==this.height)
-      this.height+=randomHeight;
-      else this.height=this.height;
-
-      if(this.age===15){
-        this.healthyStatus=false;
-      }
-
-
-    }else if(this.name==="PearTree"){
-
-      let maxHeight=7
-      this.age+=1;
-
-      if(maxHeight!==this.height)
-      this.height+=randomHeight;
-      else this.height=this.height;
-
-      if(this.age===20){
-        this.healthyStatus=false;
-      }
-
+    let listTrees = {
+      MangoTree: {maxHeight: 3, age: 10},
+      AppleTree: {maxHeight: 5, age: 15},
+      PearTree:  {maxHeight: 7, age: 20},
     }
+
+    let tree = listTrees[this.name]
+      let maxHeight=tree.maxHeight
+      this.age+=1;
+
+      if(maxHeight!==this.height){
+        this.height+=randomHeight;
+      }else {this.height=this.height;}
+
+      if(this.age===tree.age){
+        this.healthyStatus=false;
+      }
   }//end of grow
 
 }
@@ -81,19 +55,6 @@ class MangoTree extends FruitTree {
     this.age=age;
 
   }
-
-  // getAge() {
-  //   return this.age;
-  // }
-  // getHeight() {
-  //   return this.height;
-  // }
-  // getFruits() {
-  //   return this.fruits;
-  // }
-  // getHealtyStatus() {
-  //   return this.healthyStatus;
-  // }
 
   produceMangoes() {
     if(this.age>5){
@@ -126,17 +87,6 @@ class Mango extends Fruit {
   }
 
 }
-
-
-//  * driver code untuk release 0
-// let mangoTree = new MangoTree()
-// do {
-//   mangoTree.grow();
-//   mangoTree.produceMangoes();
-//   mangoTree.harvest();
-//   console.log(`[Year ${mangoTree.getAge()} Report] Height = ${mangoTree.getHeight()} | Fruits harvested = ${mangoTree.harvested}`)
-//
-// } while (mangoTree.getHealtyStatus() != false)
 
 
 // Release 1
