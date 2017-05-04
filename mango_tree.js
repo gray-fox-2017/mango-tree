@@ -40,8 +40,8 @@ class MangoTree {
   // Produce some mangoes
   produceMangoes() {
     let randomNum = this.getRandomFruitCount();
-    this.fruits += randomNum;
-    for (let i = 0; i < randomNum; i++) {
+    this.fruits = randomNum;
+    for (let i = 0; i < this.fruits; i++) {
       if (this.getRandomQuality() == 0) {
         this.fruitBasket.push(new Mango("bad"));
       } else {
@@ -63,6 +63,7 @@ class MangoTree {
       }
 
     }
+    this.fruitBasket = [];
     this.harvested = `Fruits Harvested: ${this.fruits} (good: ${good} bad: ${bad})`
   }
 
@@ -71,7 +72,7 @@ class MangoTree {
   }
 
   getRandomFruitCount() {
-    return Math.floor(Math.random() * (6 - 0)) + 0;
+    return Math.floor(Math.random() * (20 - 1)) + 1;
   }
 
   getRandomQuality() {
@@ -103,11 +104,27 @@ let mangoTree = new MangoTree()
 console.log(mangoTree);
 mangoTree.grow()
 mangoTree.produceMangoes()
+mangoTree.harvest();
+console.log(mangoTree);
+mangoTree.grow()
 mangoTree.produceMangoes()
+mangoTree.harvest();
+console.log(mangoTree);
+mangoTree.grow()
 mangoTree.produceMangoes()
 mangoTree.harvest();
 console.log(mangoTree);
 
+// mangoTree.harvest();
+// console.log(mangoTree);
+// mangoTree.grow()
+// mangoTree.produceMangoes()
+// mangoTree.harvest();
+// console.log(mangoTree);
+// mangoTree.grow()
+// mangoTree.produceMangoes()
+// mangoTree.harvest();
+// console.log(mangoTree);
 // Release 1
 class AppleTree {}
 class Apple {}
