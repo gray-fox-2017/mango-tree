@@ -1,22 +1,59 @@
 "use strict"
 
-// release 0
 
-class MangoTree {
+class FruitTree {
+  constructor(parameter) {
+    this.umur = 0;
+    if(parameter.hasOwnProperty("umur")) {
+      this.umur = parameter["umur"];
+    }
 
-  // Initialize a new MangoTree
-  constructor() {
-    this.umur = 0
-    this.tamp = []
-    this.max_umur = 20
-    this.tinggi = 0
-    this.max_tinggi = 5
-    this.max_buah = 20
-    this.buah = []
-    this.buah_diPetik = 0
-    this.statusSehat = true
-    this.count_bagus = 0
-    this.count_jelek = 0
+    this.max_umur = 20;
+    if(parameter.hasOwnProperty("max_umur")) {
+      this.max_umur = parameter["max_umur"];
+    }
+
+    this.tinggi = 0;
+    if(parameter.hasOwnProperty("tinggi")) {
+      this.tinggi = parameter["tinggi"];
+    }
+
+    this.max_tinggi = 5;
+    if(parameter.hasOwnProperty("max_tinggi")) {
+      this.max_tinggi = parameter["max_tinggi"];
+    }
+
+    this.buah = [];
+    if(parameter.hasOwnProperty("buah")) {
+      this.buah = parameter["buah"];
+      this.produceBuah(this.buah)
+    }
+
+    this.max_buah = 20;
+    if(parameter.hasOwnProperty("max_buah")) {
+      this.max_tinggi = parameter["max_buah"];
+    }
+
+    this.buah_diPetik = 0;
+    if(parameter.hasOwnProperty("buah_diPetik")) {
+      this.buah_diPetik = parameter["buah_diPetik"];
+      this.harvest(this.buah_diPetik)
+    }
+
+    this.count_bagus = 0;
+    if(parameter.hasOwnProperty("count_bagus")) {
+      this.count_bagus = parameter["count_bagus"];
+    }
+
+    this.count_jelek = 0;
+    if(parameter.hasOwnProperty("count_jelek")) {
+      this.count_jelek = parameter["count_jelek"];
+    }
+
+    this.statusSehat = true;
+    if(parameter.hasOwnProperty("statusSehat")) {
+      this.statusSehat = parameter["statusSehat"];
+    }
   }
 
   getAge() {
@@ -32,9 +69,6 @@ class MangoTree {
     return this.statusSehat
   }
 
-  // Get current states here
-
-  // Grow the tree
   randomPertumbuhan() {
     return Math.random()*2 + 1
   }
@@ -43,8 +77,11 @@ class MangoTree {
     return Math.floor(Math.random()* this.max_buah)+1
   }
 
+  randomKualitas() {
+    return Math.floor(Math.random()* 2)
+  }
 
-  grow() {
+  grow(paramGrow) {
     let random = this.randomPertumbuhan()
     this.umur++
     if (this.umur <= 17) {
@@ -53,27 +90,17 @@ class MangoTree {
       this.statusSehat = false
     }
   }
-
   // Produce some mangoes
-  produceMangoes() {
+  produceBuah(paramBuah) {
     let tamp = this.randomBuah()
     for (let i = 0; i<tamp; i++) {
       //-------------bisa ------------------
-      let test = new Mango()
+      let test = new Fruits()
       if (test.kualitas === 'bagus') {
         this.count_bagus++
       } else {
         this.count_jelek++
       }
-      //-------------bisa ------------------
-      //-------------------------bisa----------------------
-      // let rand = Math.floor(Math.random()* 2)
-      // if (rand == 0) {
-      //   this.count_bagus++
-      // } else {
-      //   this.count_jelek++
-      // }
-      //-------------------------bisa----------------------
     }
     let total_buah = (this.count_jelek + this.count_bagus);
     this.buah.push(total_buah)
@@ -81,7 +108,7 @@ class MangoTree {
   }
 
   // Get some fruits
-  harvest() {
+  harvest(paramHarvest) {
     this.buah_diPetik = `${this.buah}, (${this.count_bagus} bagus, ${this.count_jelek} jelek)`;
     this.buah = []
     this.count_bagus = 0
@@ -90,47 +117,65 @@ class MangoTree {
 
 }
 
-class Mango {
-  // Produce a mango
+class Fruit {
   constructor() {
-      this.kualitas = ''
-      let rand = Math.floor(Math.random()* 2)
-      if (rand == 0) {
-        this.kualitas = 'bagus'
-      } else {
-        this.kualitas = 'jelek'
-      }
-      //console.log(this.kualitas);
-      return this.kualitas
+    this.kualitas = (this.randomKualitas() == 0) ? "Bagus" : "Jelek";
   }
 }
 
-  console.log(`The tree is alive! :smile"`);
-  let mangoTree = new MangoTree()
-  do {
-     mangoTree.grow();
-     mangoTree.produceMangoes();
-     mangoTree.harvest();
-     console.log(`[Year ${mangoTree.umur} Report] Height = ${mangoTree.tinggi.toFixed(2)}m | Fruits harvested = ${mangoTree.buah_diPetik}`)
-  } while (mangoTree.getHealtyStatus() != false)
+// console.log(`The tree is alive! :smile"`);
+// let fruitTree = new FruitTree()
+// do {
+//    fruitTree.grow();
+//    fruitTree.produceBuah();
+//    fruitTree.harvest();
+//    console.log(`[Year ${fruitTree.umur} Report] Height = ${fruitTree.tinggi.toFixed(2)}m | Fruits harvested = ${fruitTree.buah_diPetik}`)
+// } while (fruitTree.getHealtyStatus() != false)
+//
+// console.log(`The tree has met its end. :sad:`)
 
-  console.log(`The tree has met its end. :sad:`)
+/*
+***********************************************************
+*/
 
-
-//let tes = new Mango()
-//console.log(tes.kualitas);
-
-// Release 1
 class Apple {}
 class AppleTree {}
 
-// Release 2
-class FruitTree {
+
+class MangoTree extends FruitTree {
+  // Initialize a new MangoTree
+  constructor(parameter) {
+    super(parameter)
+  }
+}
+class Mango {
+  // Produce a mango
+  constructor() {
+  }
+}
+
+
+let hidupkanMangoTree = new MangoTree({fruitName: "Mango"})
+console.log(`The ${hidupkanMangoTree.fruitName}tree is alive! :smile"`);
+// let mangoTree = new MangoTree({fruitName: "Mango"});
+// console.log(`The ${mangoTree._fruitName} tree is alive! :smile:`);
+
+do {
+   hidupkanMangoTree.grow();
+   hidupkanMangoTree.produceBuah();
+   hidupkanMangoTree.harvest();
+   console.log(`[Year ${hidupkanMangoTree.umur} Report] Height = ${hidupkanMangoTree.tinggi.toFixed(2)}m | Fruits harvested = ${hidupkanMangoTree.buah_diPetik}`)
+} while (hidupkanMangoTree.getHealtyStatus() != false)
+
+console.log(`The tree has met its end. :sad:`)
+
+
+
+
+
+// Release 3
+class TreeGrove {
   constructor() {
 
   }
 }
-class Fruit {}
-
-// Release 3
-class TreeGrove {}
