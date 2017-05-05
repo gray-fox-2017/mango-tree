@@ -5,14 +5,14 @@
 class MangoTree {
 
   // Initialize a new MangoTree
-  constructor(age=0, height=0, fruits=0, healthStatus=true) {
+  constructor(age=0, height=0, fruits=0, healthStatus=true, maxHeight=30) {
     this.age = age;
     this.height = height;
     this.fruits = fruits;
     this.fruitBasket = [];
     this.harvested = "";
     this.healthStatus = healthStatus;
-    this.maxHeight = 30;
+    this.maxHeight = maxHeight;
   }
 
   getAge() {
@@ -99,35 +99,35 @@ class Mango {
   * } while (mangoTree.healthyStatus != false)
   */
 
-// TEST
+// TEST Manggo >> done
 let mangoTree = new MangoTree()
 console.log(mangoTree);
 mangoTree.grow()
 mangoTree.produceMangoes()
 mangoTree.harvest();
 console.log(mangoTree);
-mangoTree.grow()
-mangoTree.produceMangoes()
-mangoTree.harvest();
-console.log(mangoTree);
-mangoTree.grow()
-mangoTree.produceMangoes()
-mangoTree.harvest();
-console.log(mangoTree);
+// mangoTree.grow()
+// mangoTree.produceMangoes()
+// mangoTree.harvest();
+// console.log(mangoTree);
+// mangoTree.grow()
+// mangoTree.produceMangoes()
+// mangoTree.harvest();
+// console.log(mangoTree);
 
-// mangoTree.harvest();
-// console.log(mangoTree);
-// mangoTree.grow()
-// mangoTree.produceMangoes()
-// mangoTree.harvest();
-// console.log(mangoTree);
-// mangoTree.grow()
-// mangoTree.produceMangoes()
-// mangoTree.harvest();
-// console.log(mangoTree);
+
 // Release 1
-class AppleTree {}
-class Apple {}
+class AppleTree extends MangoTree{
+  constructor (age=0, height=0, fruits=0, healthStatus=true, maxHeight=10) {
+    super(age, height, fruits, healthStatus, maxHeight)
+  }
+}
+
+// Test Apple Tree
+// let appleTree = new AppleTree()
+// console.log(appleTree);
+
+class Apple extends Mango{}
 
 // Release 2
 class FruitTree {}
