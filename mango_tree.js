@@ -251,9 +251,9 @@ class Pear extends Fruit {
   }
 }
 
-/*
+
 // Driver code
-let mangoTree = new AppleTree('apel');
+let mangoTree = new MangoTree('mangga');
 console.log(`The tree is alive! :smile:`);
 
 do {
@@ -264,8 +264,9 @@ do {
 } while (mangoTree.healthyStatus != false)
 
 console.log(`The tree has met its end :sad:`);
-*/
 
+
+// Release 3
 var grove = new TreeGrove();
 grove.inputTree("MangoTree", 3, 1.8, 7, true);
 grove.inputTree("MangoTree", 5, 2.4, 12, true);
@@ -274,7 +275,7 @@ grove.inputTree("PearTree", 7, 2, 15, true);
 
 // next year
 //grove.nextYear();
-for (let i=0; i<50; i++) {
+for (let i=0; i<250; i++) {
   grove.nextYear();
 }
 
