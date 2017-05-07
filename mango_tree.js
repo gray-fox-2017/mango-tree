@@ -35,24 +35,6 @@ class FruitTree {
     }
   }
 
-  // Produce some fruits
-  // produceFruits() {
-  //   if (this.healthStatus == false) {
-  //     this.fruits = 0;
-  //     this.fruitBasket = []
-  //   } else {
-  //     let randomNum = this.getRandomFruitCount();
-  //     this.fruits = randomNum;
-  //     for (let i = 0; i < this.fruits; i++) {
-  //       if (this.getRandomQuality() == 0) {
-  //         this.fruitBasket.push(new Fruit("bad"));
-  //       } else {
-  //         this.fruitBasket.push(new Fruit("good"));
-  //       }
-  //     }
-  //   }
-  // }
-
   // Get some fruits
   harvest() {
     // let fruitsCount = this.getFruits();
@@ -98,7 +80,7 @@ class MangoTree extends FruitTree {
   // Initialize a new MangoTree
   constructor(age=0, height=0, fruits=0, healthStatus=true, maxAge=10, maxFruits=10) {
     super(age, height, fruits, healthStatus, maxAge, maxFruits)
-    this.name = "MangoTree"
+    this.name = "Mango Tree"
   }
 
   // Produce some fruits
@@ -111,9 +93,9 @@ class MangoTree extends FruitTree {
       this.fruits = randomNum;
       for (let i = 0; i < this.fruits; i++) {
         if (this.getRandomQuality() == 0) {
-          this.fruitBasket.push(new Fruit("bad"));
+          this.fruitBasket.push(new Mango("bad"));
         } else {
-          this.fruitBasket.push(new Fruit("good"));
+          this.fruitBasket.push(new Mango("good"));
         }
       }
     }
@@ -146,8 +128,8 @@ class AppleTree extends FruitTree{
 }
 
 class PearTree extends FruitTree {
-  constructor (age=0, height=0, fruits=0, healthStatus=true, maxHeight=100, maxFruits=4) {
-    super(age, height, fruits, healthStatus, maxHeight, maxFruits)
+  constructor (age=0, height=0, fruits=0, healthStatus=true, maxAge=4, maxFruits=4) {
+    super(age, height, fruits, healthStatus, maxAge, maxFruits)
     this.name = "Pear Tree"
   }
 
@@ -177,6 +159,22 @@ class OtherTree extends FruitTree {
     this.name = "Other Tree"
   }
 
+  produceFruits() {
+    if (this.healthStatus == false) {
+      this.fruits = 0;
+      this.fruitBasket = []
+    } else {
+      let randomNum = this.getRandomFruitCount();
+      this.fruits = randomNum;
+      for (let i = 0; i < this.fruits; i++) {
+        if (this.getRandomQuality() == 0) {
+          this.fruitBasket.push(new Fruit("bad"));
+        } else {
+          this.fruitBasket.push(new Fruit("good"));
+        }
+      }
+    }
+  }
 
 
 }
@@ -270,10 +268,8 @@ class TreeGrove {
   showDeadTrees () {
     for (let i = 0; i < this.grove.length; i++) {
       if (this.grove[i].healthStatus == false) {
-        console.log(`Pohon yang sudah mati antara lain `);
+        console.log(`Pohon yang sudah mati antara lain :`);
         console.log(`${i+1}. ${this.grove[i].name}`);
-      } else {
-        console.log(`Belum ada pohon yang mati`);
       }
     }
     return 1;
@@ -290,28 +286,19 @@ class TreeGrove {
 //   console.log(`[Year ${mangoTree.age} Report] Height = ${mangoTree.height} | Fruits harvested = ${mangoTree.harvested}`)
 // } while (mangoTree.healthStatus != false)
 
-// class Coba {
-//   constructor(asal) {
-//     this.name = "coba ajah"
-//     this.asal = asal;
-//   }
-// }
 
-
-let counter = new MangoTree()
 let groveTree = new TreeGrove()
 groveTree.inputTree("AppleTree", 2, 1.23, 3, true);
-console.log(groveTree);
-groveTree.grove[0].grow();
-groveTree.grove[0].produceFruits()
-groveTree.grove[0].harvest()
-console.log(groveTree);
-groveTree.grove[0].grow();
-groveTree.grove[0].produceFruits()
-groveTree.grove[0].harvest()
-console.log(groveTree);
-groveTree.showTrees()
-groveTree.showAge()
-groveTree.showMatureTrees()
-groveTree.showDeadTrees()
-console.log(groveTree);
+groveTree.inputTree("MangoTree", 3, 2, 5, true);
+groveTree.inputTree("PearTree", 2, 0.5, true);
+// groveTree.inputTree("Pohon Uang", 1, 0.3, true);
+
+
+groveTree.nextYear()
+
+groveTree.nextYear()
+
+groveTree.showAge();
+groveTree.showTrees();
+groveTree.showDeadTrees();
+groveTree.showMatureTrees();
