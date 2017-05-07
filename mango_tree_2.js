@@ -58,19 +58,7 @@ class FruitTree{
     if (this.age >= this.minFertileAge && this.age <= this.maxHarvetsAge) {
       let harvest = this.randomGenerator(this.maxFruit);
       for (var i = 0; i < harvest; i++) {
-        if (this.treeName === 'TreeOfMango') {
-          if (this.randomGenerator(this.minFruit) < 1.8) {
-            this.fruitBox.push(new Mango('good'));
-          } else {
-            this.fruitBox.push(new Mango('bad'));
-          }
-        } else if (this.treeName === 'TreeOfApple') {
-          if (this.randomGenerator(this.minFruit) < 1.8) {
-            this.fruitBox.push(new Mango('good'));
-          } else {
-            this.fruitBox.push(new Mango('bad'));
-          }
-        } else if (this.treeName === 'TreeOfPeer') {
+        if (this.treeName === 'TreeOfMango' || this.treeName === 'TreeOfApple' || this.treeName === 'TreeOfPeer') {
           if (this.randomGenerator(this.minFruit) < 1.8) {
             this.fruitBox.push(new Mango('good'));
           } else {
@@ -242,21 +230,21 @@ let peer = new PeerTree()
 
 
 
-  mango.getHealtStatus();
-do {
-  mango.grow();
-  mango.produce();
-  console.log(`[Year ${mango.getAge()} Report] Height = ${mango.heighted()} | Fruit Harvested = ${mango.harvest()}`)
-
-} while (mango.healtyStatus != false)
-  mango.getHealtStatus();
+//   mango.getHealtStatus();
 // do {
-//   apple.grow();
-//   apple.produce();
-//   console.log(`[Year ${apple.getAge()} Report] Height = ${apple.heighted()} | Fruit Harvested = ${apple.harvest()}`)
+//   mango.grow();
+//   mango.produce();
+//   console.log(`[Year ${mango.getAge()} Report] Height = ${mango.heighted()} | Fruit Harvested = ${mango.harvest()}`)
 //
-// } while (apple.healtyStatus != false)
-//   apple.getHealtStatus();
+// } while (mango.healtyStatus != false)
+//   mango.getHealtStatus();
+do {
+  apple.grow();
+  apple.produce();
+  console.log(`[Year ${apple.getAge()} Report] Height = ${apple.heighted()} | Fruit Harvested = ${apple.harvest()}`)
+
+} while (apple.healtyStatus != false)
+  apple.getHealtStatus();
 // do {
 //   peer.grow();
 //   peer.produce();
