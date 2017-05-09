@@ -3,16 +3,9 @@
 // Release 0
 class FruitTree{
     constructor() {
-        this.age = 0;
-        this.height = 0;
         this.harvested = 0;
         this.healtyStatus = true;
-        this.maxFruit = 30;
         this.minFruit = 3;
-        this.maxAge = 17;
-        this.maxGrowAge = 15;
-        this.maxHarvetsAge = 19;
-        this.minFertileAge = 2;
         this.fruitBox = [];
         this.thisMaxGrowthYear = 30;
 
@@ -72,12 +65,14 @@ class FruitTree{
         let objHarvestFruit = {total : 0, good : 0, bad : 0};
         if (this.age >= this.minFertileAge && this.age <= this.maxHarvetsAge) {
             for (var i = 0; i < this.fruitBox.length; i++) {
-                let harvestQualityGood = this.fruitBox[i].quality === 'good' ?
-                    objHarvestFruit.good++ : objHarvestFruit.bad++ ;
-                let harvestQualityBad = this.fruitBox[i].quality === 'bad' ?
-                    objHarvestFruit.bad++ : objHarvestFruit.good++ ;
-                // let harvestTotal = this.fruitBox[i].quality === 'good' || 'bad' ?
-                // objHarvestFruit.total++;
+                if(this.fruitBox[i].quality === 'good'){
+                    objHarvestFruit.good++;
+                    objHarvestFruit.bad++ ;
+                  }
+                else if(this.fruitBox[i].quality === 'bad') {
+                    objHarvestFruit.bad++;
+                    objHarvestFruit.good++ ;
+                  }
             }
         }
         this.harvested = `(${objHarvestFruit.good} good + ${objHarvestFruit.bad} bad) = ${objHarvestFruit.good+objHarvestFruit.bad} `
@@ -228,16 +223,15 @@ let apple = new AppleTree();
 let peer = new PeerTree();
 
 do {
-    apple.grow();
-    apple.produce();
-    console.log(`[Year ${apple.getAge()} Report] Height = ${apple.heighted()} | Fruit Harvested = ${apple.harvest()}`)
+    peer.grow();
+    peer.produce();
+    console.log(`[Year ${peer.getAge()} Report] Height = ${peer.heighted()} | Fruit Harvested = ${peer.harvest()}`)
 
-} while (apple.healtyStatus != false)
-apple.getHealtStatus();
+} while (peer.healtyStatus != false)
+peer.getHealtStatus();
 
 
 let groove = new TreeGrove();
-groove.inputTree('mangga')
 groove.inputTree('apple')
 groove.inputTree('mango',3)
 groove.inputTree('peer',7)
